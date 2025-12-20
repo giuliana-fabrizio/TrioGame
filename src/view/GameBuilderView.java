@@ -96,6 +96,7 @@ public class GameBuilderView extends JPanel {
 
     public void askPlayerNames(int NUMBER_IMAGES) {
         gridPanel.removeAll();
+        playerFields.clear();
 
         for (int i = 0; i < NUMBER_IMAGES; i++) {
             drawPlayerInput(i);
