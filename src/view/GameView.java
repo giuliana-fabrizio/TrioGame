@@ -6,33 +6,21 @@ import javax.swing.*;
 import controller.GameController;
 import models.*;
 
-public class GameView extends JFrame {
+public class GameView extends JPanel {
 
-    private final int height = 1080;
-    private final int width = 1920;
     private final int sideWidth = 450;
-    private final String backgroundImage = "assets/Plateau.png";
-
     private Game game;
-
     private GameController gameController;
 
 
-    public GameView(Game game, String title) {
-        super(title);
+    public GameView(Game game) {
         this.game = game;
         this.gameController = new GameController(this.game, this);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         setLayout(new BorderLayout(5, 5));
-        setLocationRelativeTo(null);
+        setOpaque(false);
 
-        setResizable(true);
-        setSize(width, height);
-
-        BackgroundPanel background = new BackgroundPanel(backgroundImage, height, width);
-        setContentPane(background);
+        init();
     }
 
 
@@ -111,10 +99,5 @@ public class GameView extends JFrame {
         }
 
         gameController.confirmPlayersArrangement();
-    }
-
-
-    public void display() {
-        setVisible(true);
     }
 }
