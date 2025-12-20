@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.Collections;
 
-public class Systeme {
+public class Game {
 
     private static final int NUMBER_CARDS = 36;
     private final Card[] cards;
@@ -14,7 +14,7 @@ public class Systeme {
 
     private Player winner;
 
-    public Systeme() {
+    public Game() {
         this.cards = new Card[NUMBER_CARDS];
         this.cardReturned = new ArrayList<>(3);
         this.table = new Table();
