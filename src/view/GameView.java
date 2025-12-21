@@ -1,7 +1,7 @@
 package view;
 
+import java.util.*;
 import java.util.List;
-import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.*;
 import controller.GameController;
@@ -121,6 +121,10 @@ public class GameView extends JPanel {
                 pv.setCurrentPlayer(false);
             }
         }
+    }
+
+    public void sortPlayerViews() {
+        playerViews.sort(Comparator.comparingInt(pv -> pv.getPlayer().getPriority()));
     }
 
     public ArrayList<PlayerView> getPlayerViews() {

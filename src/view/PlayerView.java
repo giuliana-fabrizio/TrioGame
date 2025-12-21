@@ -102,4 +102,8 @@ public class PlayerView extends JPanel {
     public void refresh() {
         displayCardList();
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

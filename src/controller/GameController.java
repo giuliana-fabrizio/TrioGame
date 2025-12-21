@@ -26,6 +26,8 @@ public class GameController {
             Player player = game.getPlayers().get(i);
             player.setPriority(list.get(i));
         }
+
+        gameView.sortPlayerViews();
     }
 
     public ArrayList<Player> getGamePlayers() {
