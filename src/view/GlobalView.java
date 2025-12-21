@@ -22,6 +22,7 @@ public class GlobalView extends JFrame {
 
         setResizable(true);
         setSize(width, height);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
 

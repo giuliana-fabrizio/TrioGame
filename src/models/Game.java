@@ -143,7 +143,8 @@ public class Game {
 
     public int next() {
         if (players.isEmpty()) return 0;
-        return (this.currentPlayerPosition + 1) % players.size();
+        currentPlayerPosition = (currentPlayerPosition + 1) % players.size();
+        return currentPlayerPosition;
     }
 
     public Card[] getCards() {

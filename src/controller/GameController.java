@@ -16,6 +16,9 @@ public class GameController {
 
     public void confirmPlayersArrangement() {
         game.getPlayers().sort(Comparator.comparingInt(p -> p.getPriority()));
+
+        int posPlayer = game.getCurrentPlayerPosition();
+        gameView.refreshPlayerName(posPlayer);
     }
 
     public void setPlayersPriority(List<Integer> list) {
@@ -23,5 +26,13 @@ public class GameController {
             Player player = game.getPlayers().get(i);
             player.setPriority(list.get(i));
         }
+    }
+
+    public ArrayList<Player> getGamePlayers() {
+        return game.getPlayers();
+    }
+
+    public Table getGameTable() {
+        return game.getTable();
     }
 }

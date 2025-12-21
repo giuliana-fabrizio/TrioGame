@@ -8,10 +8,12 @@ import view.*;
 public class TableController {
 
     private Game game;
+    private GameView gameView;
     private TableView tableView;
 
-    public TableController(Game game, TableView tableView) {
+    public TableController(Game game, GameView gameView, TableView tableView) {
         this.game = game;
+        this.gameView = gameView;
         this.tableView = tableView;
     }
 
@@ -25,7 +27,8 @@ public class TableController {
             Timer timer = new Timer(2000, e -> {
                 if (!game.verifyReturnedCards()) {
                     game.hideCardReturn();
-                    game.next();
+                    int posPlayer = game.next();
+                    gameView.refreshPlayerName(posPlayer);
                 }
                 tableView.refresh();
             });

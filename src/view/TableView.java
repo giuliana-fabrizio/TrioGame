@@ -12,10 +12,10 @@ public class TableView extends JPanel {
     private Game game;
     private Table table;
 
-    public TableView(Game game, Table table) {
+    public TableView(Game game, Table table, GameView gameView) {
         this.game = game;
         this.table = table;
-        this.tableController = new TableController(this.game, this);
+        this.tableController = new TableController(this.game, gameView, this);
         init();
     }
 

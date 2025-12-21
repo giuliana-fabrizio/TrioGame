@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import controller.*;
 import models.*;
@@ -15,7 +14,10 @@ public class PlayerView extends JPanel {
     private String direction;
     private JLabel nameLabel;
     private JPanel cardsPanel;
+    private boolean isCurrentPlayer = false;
 
+    private static final Color ACTIVE_COLOR = Color.decode("#FFD700");
+    private static final Color NORMAL_COLOR = Color.decode("#F3E3C1");
 
     public PlayerView(Game game, Player player, String direction) {
         this.game = game;
@@ -24,7 +26,6 @@ public class PlayerView extends JPanel {
         this.direction = direction;
         init();
     }
-
 
     private void init() {
         if ("top-bottom".equals(direction)) {
@@ -35,11 +36,11 @@ public class PlayerView extends JPanel {
         setOpaque(false);
 
         nameLabel = new JLabel(
-            player.getName() + " - " + String.valueOf(player.getScore()),
-            SwingConstants.CENTER
+                player.getName() + " - " + String.valueOf(player.getScore()),
+                SwingConstants.CENTER
         );
         nameLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        nameLabel.setForeground(Color.decode("#F3E3C1"));
+        nameLabel.setForeground(NORMAL_COLOR);
         nameLabel.setOpaque(false);
 
         add(nameLabel, BorderLayout.NORTH);
@@ -50,7 +51,6 @@ public class PlayerView extends JPanel {
 
         displayCardList();
     }
-
 
     public void displayCardList() {
         cardsPanel.removeAll();
@@ -84,13 +84,20 @@ public class PlayerView extends JPanel {
         cardsPanel.repaint();
     }
 
+    public void setCurrentPlayer(boolean isActive) {
+        this.isCurrentPlayer = isActive;
 
-    public void setNameLabel() {
-        nameLabel.setText(
-            player.getName() + " - " + String.valueOf(player.getScore())
-        );
+        if (isActive) {
+            nameLabel.setForeground(ACTIVE_COLOR);
+            nameLabel.setText(">> " + player.getName() + " - " + player.getScore() + " <<");
+        } else {
+            nameLabel.setForeground(NORMAL_COLOR);
+            nameLabel.setText(player.getName() + " - " + player.getScore());
+        }
+
+        nameLabel.revalidate();
+        nameLabel.repaint();
     }
-
 
     public void refresh() {
         displayCardList();

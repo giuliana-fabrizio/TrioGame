@@ -5,7 +5,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import controller.GameBuilderController;
-import models.*;
 
 public class GameBuilderView extends JPanel {
 
@@ -29,8 +28,9 @@ public class GameBuilderView extends JPanel {
         playerFields = new ArrayList<>();
         playerNameList = new ArrayList<String>();
 
-        setLayout(new GridLayout(4, 1));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setOpaque(false);
+        setBorder(BorderFactory.createEmptyBorder(300, 150, 80, 150));
 
         init();
     }
@@ -41,10 +41,11 @@ public class GameBuilderView extends JPanel {
         label.setFont(new Font("Arial", Font.BOLD, 30));
         label.setForeground(Color.decode("#F3E3C1"));
         label.setOpaque(false);
+        label.setAlignmentX(CENTER_ALIGNMENT);
 
-
-        JPanel numberPanel = new JPanel(new FlowLayout());
+        JPanel numberPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
         numberPanel.setOpaque(false);
+        numberPanel.setMaximumSize(new Dimension(600, 80));
 
         JLabel numberLabel = new JLabel("Nombre de joueur");
         numberLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -63,17 +64,19 @@ public class GameBuilderView extends JPanel {
             numberPanel.add(button);
         }
 
-
-        gridPanel = new JPanel(new GridLayout(MAX_PLAYER, 1));
+        gridPanel = new JPanel();
+        gridPanel.setLayout(new BoxLayout(gridPanel, BoxLayout.Y_AXIS));
         gridPanel.setOpaque(false);
-
+        gridPanel.setAlignmentX(CENTER_ALIGNMENT);
 
         button = new JButton("Confirmer");
         // button.setIcon(imageIcon);
 
-        button.setPreferredSize(new Dimension(SIZE_NUMBER, SIZE_NUMBER));
+        button.setPreferredSize(new Dimension(200, 50));
+        button.setMaximumSize(new Dimension(200, 50));
         button.setForeground(Color.decode("#F3E3C1"));
         button.setFocusable(false);
+        button.setAlignmentX(CENTER_ALIGNMENT);
 
         button.setFont(new Font("Arial", Font.BOLD, 24));
         button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -81,16 +84,20 @@ public class GameBuilderView extends JPanel {
 
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         button.addActionListener(e -> confirmConfiguration());
 
         button.setVisible(false);
 
-
         add(label);
+        add(Box.createRigidArea(new Dimension(0, 15)));
         add(numberPanel);
+        add(Box.createRigidArea(new Dimension(0, 20)));
         add(gridPanel);
+        add(Box.createRigidArea(new Dimension(0, 20)));
         add(button);
+        add(Box.createVerticalGlue()); 
     }
 
 
@@ -123,6 +130,7 @@ public class GameBuilderView extends JPanel {
 
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         button.addActionListener(e -> builderController.confirmPlayersNumber(i));
 
@@ -132,20 +140,24 @@ public class GameBuilderView extends JPanel {
 
     public void drawPlayerInput(int i) {
         JPanel playerPanel = new JPanel();
-        playerPanel.setLayout(new FlowLayout());
+        playerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 2)); 
         playerPanel.setOpaque(false);
+        playerPanel.setMaximumSize(new Dimension(500, 35)); 
+        playerPanel.setAlignmentX(CENTER_ALIGNMENT);
 
-        JLabel playerLabel = new JLabel("Nom du " + (i + 1) + "ème joueurs");
-        playerLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        JLabel playerLabel = new JLabel("Nom du " + (i + 1) + "ème joueur");
+        playerLabel.setFont(new Font("Arial", Font.BOLD, 16));
         playerLabel.setForeground(Color.decode("#F3E3C1"));
         playerLabel.setOpaque(false);
+        playerLabel.setPreferredSize(new Dimension(180, 25));
 
-        JTextField nameField = new JTextField(15);
+        JTextField nameField = new JTextField(12);
         nameField.setBackground(Color.decode("#F3E3C1"));
+        nameField.setFont(new Font("Arial", Font.PLAIN, 14));
         nameField.setBorder(
             BorderFactory.createCompoundBorder(
-                new EmptyBorder(new Insets(0, 5, 0, 5)),
-                new EmptyBorder(new Insets(5, 5, 5, 5))
+                BorderFactory.createLineBorder(Color.decode("#8B5A2B"), 2),
+                new EmptyBorder(3, 8, 3, 8)
             )
         );
 
