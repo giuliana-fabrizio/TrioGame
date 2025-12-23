@@ -66,7 +66,13 @@ public class PlayerView extends JPanel {
 
 
         for (Card card : cardList) {
-            CardView cardView = new CardView(card, game, gameView);
+            boolean canRevert = false;
+
+            if(card.equals(cardList.get(0)) || card.equals(cardList.get(size - 1))) {
+                canRevert = true;
+            }
+
+            CardView cardView = new CardView(card, game, gameView, canRevert);
             cardsPanel.add(cardView);
         }
 

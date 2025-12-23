@@ -14,7 +14,7 @@ public class CardView extends JButton {
     public static final int height = 130; 
     public static final int width = 90;
 
-    public CardView(Card card, Game game, GameView gameView) {
+    public CardView(Card card, Game game, GameView gameView, boolean canRevert) {
         super();
 
         this.card = card;
@@ -25,7 +25,9 @@ public class CardView extends JButton {
         setBorder(null);
         setContentAreaFilled(false);
 
-        addActionListener(e -> cardController.revertCard());
+        if (canRevert) {
+            addActionListener(e -> cardController.revertCard());
+        }
 
         setImageIcon();
     }

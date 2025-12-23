@@ -29,7 +29,7 @@ public class TableView extends JPanel {
         setPreferredSize(new Dimension(400, rows * (CardView.height + 5)));
 
         for (Card card : table.getCardList()) {
-            CardView cardView = new CardView(card, game, gameView);
+            CardView cardView = new CardView(card, game, gameView, true);
             add(cardView);
         }
     }
