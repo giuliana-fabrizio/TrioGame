@@ -3,19 +3,18 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import controller.*;
 import models.*;
 
 public class TableView extends JPanel {
 
-    private TableController tableController;
     private Game game;
     private Table table;
+    private GameView gameView;
 
     public TableView(Game game, Table table, GameView gameView) {
         this.game = game;
         this.table = table;
-        this.tableController = new TableController(this.game, gameView, this);
+        this.gameView = gameView;
         init();
     }
 
@@ -30,18 +29,8 @@ public class TableView extends JPanel {
         setPreferredSize(new Dimension(400, rows * (CardView.height + 5)));
 
         for (Card card : table.getCardList()) {
-            JButton tile = new JButton();
-
-            tile.setPreferredSize(new Dimension(CardView.width, CardView.height));
-            tile.setFocusable(false);
-            tile.setBorder(null);
-            tile.setContentAreaFilled(false);
-
-            CardView cardView = new CardView(card);
-            tile.setIcon(cardView.getImageIcon());
-
-            tile.addActionListener(e -> tableController.revertCard(card));
-            add(tile);
+            CardView cardView = new CardView(card, game, gameView);
+            add(cardView);
         }
     }
 

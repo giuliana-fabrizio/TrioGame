@@ -5,25 +5,25 @@ import java.util.*;
 import models.*;
 import view.*;
 
-public class PlayerController {
+public class CardController {
 
+    private Card card;
+    private CardView cardView;
     private Game game;
     private GameView gameView;
-    private Player player;
-    private PlayerView playerView;
 
-    public PlayerController(Game game, GameView gameView, Player player, PlayerView playerView) {
+    public CardController(Card card, CardView cardView, Game game, GameView gameView) {
+        this.card = card;
+        this.cardView = cardView;
         this.game = game;
         this.gameView = gameView;
-        this.player = player;
-        this.playerView = playerView;
     }
 
-    public void revertCard(Card card) {
-        player.revertCard(card);
+    public void revertCard() {
+        card.getOwner().revertCard(card);
         boolean result = game.addCardReturn(card);
 
-        playerView.refresh(player.getPriority() == game.getCurrentPlayerPosition());
+        cardView.setImageIcon();
 
         if (result && game.getCardReturn().size() > 1) {
             Timer timer = new Timer(2000, e -> {
@@ -33,15 +33,12 @@ public class PlayerController {
                     game.hideCardReturn();
                     posPlayer = game.next();
                 }
+
                 gameView.refresh(posPlayer);
             });
 
             timer.setRepeats(false);
             timer.start();
         }
-    }
-
-    public ArrayList<Card> getCardList() {
-        return player.getCardList();
     }
 }

@@ -3,14 +3,13 @@ package view;
 import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.*;
-import controller.*;
 import models.*;
 
 public class PlayerView extends JPanel {
 
-    private PlayerController playerController;
     private Game game;
     private Player player;
+    private GameView gameView;
 
     private String direction;
     private JLabel nameLabel;
@@ -22,8 +21,8 @@ public class PlayerView extends JPanel {
 
     public PlayerView(Game game, GameView gameView, Player player, String direction) {
         this.game = game;
+        this.gameView = gameView;
         this.player = player;
-        this.playerController = new PlayerController(this.game, gameView, this.player, this);
         this.direction = direction;
         init();
     }
@@ -55,7 +54,7 @@ public class PlayerView extends JPanel {
 
     public void displayCardList() {
         cardsPanel.removeAll();
-        ArrayList<Card> cardList = playerController.getCardList();
+        ArrayList<Card> cardList = player.getCardList();
 
         int size = cardList.size();
         int columns = (int) Math.ceil(Math.sqrt(size));
@@ -67,20 +66,8 @@ public class PlayerView extends JPanel {
 
 
         for (Card card : cardList) {
-            JButton tile = new JButton();
-
-            tile.setPreferredSize(new Dimension(CardView.width, CardView.height));
-            tile.setFocusable(false);
-            tile.setBorder(null);
-            tile.setContentAreaFilled(false);
-
-            CardView cardView = new CardView(card);
-            tile.setIcon(cardView.getImageIcon());
-
-            if(card.equals(cardList.get(0)) || card.equals(cardList.get(size - 1))) {
-                tile.addActionListener(e -> playerController.revertCard(card));
-            }
-            cardsPanel.add(tile);
+            CardView cardView = new CardView(card, game, gameView);
+            cardsPanel.add(cardView);
         }
 
         add(cardsPanel, BorderLayout.CENTER);
