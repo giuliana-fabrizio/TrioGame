@@ -8,32 +8,40 @@ import view.*;
 public class PlayerController {
 
     private Game game;
+    private GameView gameView;
     private Player player;
     private PlayerView playerView;
 
-    public PlayerController(Game game, Player player, PlayerView playerView) {
+    public PlayerController(Game game, GameView gameView, Player player, PlayerView playerView) {
         this.game = game;
+        this.gameView = gameView;
         this.player = player;
         this.playerView = playerView;
     }
 
     public void revertCard(Card card) {
-        game.getTable().revertCard(card);
+        player.revertCard(card);
         boolean result = game.addCardReturn(card);
 
-        playerView.refresh();
+        playerView.refresh(player.getPriority() == game.getCurrentPlayerPosition());
 
-        if (result) {
+        if (result && game.getCardReturn().size() > 1) {
             Timer timer = new Timer(2000, e -> {
+                int posPlayer = game.getCurrentPlayerPosition();
+
                 if (!game.verifyReturnedCards()) {
                     game.hideCardReturn();
-                    game.next();
+                    posPlayer = game.next();
                 }
-                playerView.refresh();
+                gameView.refresh(posPlayer);
             });
 
             timer.setRepeats(false);
             timer.start();
         }
+    }
+
+    public ArrayList<Card> getCardList() {
+        return player.getCardList();
     }
 }

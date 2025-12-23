@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.*;
 import controller.*;
@@ -19,10 +20,10 @@ public class PlayerView extends JPanel {
     private static final Color ACTIVE_COLOR = Color.decode("#FFD700");
     private static final Color NORMAL_COLOR = Color.decode("#F3E3C1");
 
-    public PlayerView(Game game, Player player, String direction) {
+    public PlayerView(Game game, GameView gameView, Player player, String direction) {
         this.game = game;
         this.player = player;
-        this.playerController = new PlayerController(this.game, this.player, this);
+        this.playerController = new PlayerController(this.game, gameView, this.player, this);
         this.direction = direction;
         init();
     }
@@ -54,8 +55,9 @@ public class PlayerView extends JPanel {
 
     public void displayCardList() {
         cardsPanel.removeAll();
+        ArrayList<Card> cardList = playerController.getCardList();
 
-        int size = player.getCardList().size();
+        int size = cardList.size();
         int columns = (int) Math.ceil(Math.sqrt(size));
         int rows = (int) Math.ceil((double) size / columns);
 
@@ -63,7 +65,8 @@ public class PlayerView extends JPanel {
             cardsPanel.setPreferredSize(new Dimension(400, rows * (CardView.height + 5)));
         }
 
-        for (Card card : player.getCardList()) {
+
+        for (Card card : cardList) {
             JButton tile = new JButton();
 
             tile.setPreferredSize(new Dimension(CardView.width, CardView.height));
@@ -74,7 +77,9 @@ public class PlayerView extends JPanel {
             CardView cardView = new CardView(card);
             tile.setIcon(cardView.getImageIcon());
 
-            tile.addActionListener(e -> System.out.println("Card : " + card.getId()));
+            if(card.equals(cardList.get(0)) || card.equals(cardList.get(size - 1))) {
+                tile.addActionListener(e -> playerController.revertCard(card));
+            }
             cardsPanel.add(tile);
         }
 
@@ -99,8 +104,9 @@ public class PlayerView extends JPanel {
         nameLabel.repaint();
     }
 
-    public void refresh() {
+    public void refresh(boolean isActive) {
         displayCardList();
+        setCurrentPlayer(isActive);
     }
 
     public Player getPlayer() {

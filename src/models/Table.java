@@ -12,9 +12,4 @@ public class Table  extends CardHolder {
             super.removeCard(card);
         }
     }
-
-    public Card revertCard(Card card) {
-        card.setVisible(true);
-        return card;
-    }
 }

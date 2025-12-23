@@ -89,16 +89,16 @@ public class Game {
         cardReturned.clear();
     }
 
-    public boolean verifyReturnedCards(){
-        for(int i = 0; i < this.cardReturned.size() - 1; i++){
+    public boolean verifyReturnedCards() {
+        for(int i = 0; i < this.cardReturned.size() - 1; i++) {
             Card card1 = this.cardReturned.get(i);
             Card card2 = this.cardReturned.get(i+1);
-            if (card1.getType() != card2.getType() || card1.getId() == card2.getId()){
+            if (card1.getType() != card2.getType() || card1.getId() == card2.getId()) {
                 return false;
             }
         }
 
-        if (this.cardReturned.size() == 3){
+        if (this.cardReturned.size() == 3) {
             Player currentPlayer = this.players.get(this.currentPlayerPosition);
 
             TypeStatutUTBM typeTrio = this.cardReturned.getFirst().getType();
@@ -175,7 +175,7 @@ public class Game {
 
     public void removeCards() {
         for (Card card : cardReturned) {
-            if (card.getOwner() != null){
+            if (card.getOwner() != null) {
                 card.getOwner().removeCard(card);
             }
         }

@@ -10,9 +10,11 @@ import models.*;
 public class GameView extends JPanel {
 
     private final int sideWidth = 450;
+    private ArrayList<PlayerView> playerViews;
     private Game game;
     private GameController gameController;
-    private ArrayList<PlayerView> playerViews;
+    private TableView tableView;
+
 
     public GameView(Game game) {
         this.game = game;
@@ -27,7 +29,8 @@ public class GameView extends JPanel {
 
 
     public void init() {
-        TableView tableView = new TableView(game, gameController.getGameTable(), this);
+        tableView = new TableView(game, gameController.getGameTable(), this);
+
         JPanel centerWrapper = new JPanel(new GridBagLayout());
         centerWrapper.setOpaque(false);
         centerWrapper.add(tableView);
@@ -74,9 +77,9 @@ public class GameView extends JPanel {
         int index = 0;
 
         if (size >= 3) {
-            PlayerView pv1 = new PlayerView(game, gameController.getGamePlayers().get(index++), "top-bottom");
-            PlayerView pv2 = new PlayerView(game, gameController.getGamePlayers().get(index++), "top-bottom");
-            PlayerView pv3 = new PlayerView(game, gameController.getGamePlayers().get(index++), "onside");
+            PlayerView pv1 = new PlayerView(game, this, gameController.getGamePlayers().get(index++), "top-bottom");
+            PlayerView pv2 = new PlayerView(game, this, gameController.getGamePlayers().get(index++), "top-bottom");
+            PlayerView pv3 = new PlayerView(game, this, gameController.getGamePlayers().get(index++), "onside");
             north.add(pv1);
             south.add(pv2);
             west.add(pv3);
@@ -86,40 +89,37 @@ public class GameView extends JPanel {
         }
 
         if (size >= 4) {
-            PlayerView pv4 = new PlayerView(game, gameController.getGamePlayers().get(index++), "onside");
+            PlayerView pv4 = new PlayerView(game, this, gameController.getGamePlayers().get(index++), "onside");
             east.add(pv4);
             playerViews.add(pv4);
 
-            gameController.setPlayersPriority(List.of(1, 3, 4, 2));
+            gameController.setPlayersPriority(List.of(0, 2, 3, 1));
         }
 
         if (size >= 5) {
-            PlayerView pv5 = new PlayerView(game, gameController.getGamePlayers().get(index++), "top-bottom");
+            PlayerView pv5 = new PlayerView(game, this, gameController.getGamePlayers().get(index++), "top-bottom");
             south.add(pv5);
             playerViews.add(pv5);
 
-            gameController.setPlayersPriority(List.of(1, 4, 5, 2, 3));
+            gameController.setPlayersPriority(List.of(0, 3, 4, 1, 2));
         }
 
         if (size >= 6) {
-            PlayerView pv6 = new PlayerView(game, gameController.getGamePlayers().get(index++), "top-bottom");
+            PlayerView pv6 = new PlayerView(game, this, gameController.getGamePlayers().get(index++), "top-bottom");
             north.add(pv6);
             playerViews.add(pv6);
-            gameController.setPlayersPriority(List.of(1, 5, 6, 3, 4, 2));
+            gameController.setPlayersPriority(List.of(0, 4, 5, 2, 3, 1));
         }
 
         gameController.confirmPlayersArrangement();
     }
 
-    public void refreshPlayerName(int posPlayer) {
+    public void refresh(int posPlayer) {
+        tableView.refresh();
+
         for (int i = 0; i < playerViews.size(); i++) {
             PlayerView pv = playerViews.get(i);
-
-            if (i == posPlayer) {
-                pv.setCurrentPlayer(true);
-            } else {
-                pv.setCurrentPlayer(false);
-            }
+            pv.refresh(i == posPlayer);
         }
     }
 

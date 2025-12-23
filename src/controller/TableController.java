@@ -23,14 +23,15 @@ public class TableController {
 
         tableView.refresh();
 
-        if (result) {
+        if (result && game.getCardReturn().size() > 1) {
             Timer timer = new Timer(2000, e -> {
+                int posPlayer = game.getCurrentPlayerPosition();
+
                 if (!game.verifyReturnedCards()) {
                     game.hideCardReturn();
-                    int posPlayer = game.next();
-                    gameView.refreshPlayerName(posPlayer);
+                    posPlayer = game.next();
                 }
-                tableView.refresh();
+                gameView.refresh(posPlayer);
             });
 
             timer.setRepeats(false);

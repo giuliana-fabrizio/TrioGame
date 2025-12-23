@@ -18,7 +18,7 @@ public class GameController {
         game.getPlayers().sort(Comparator.comparingInt(p -> p.getPriority()));
 
         int posPlayer = game.getCurrentPlayerPosition();
-        gameView.refreshPlayerName(posPlayer);
+        gameView.refresh(posPlayer);
     }
 
     public void setPlayersPriority(List<Integer> list) {

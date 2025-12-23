@@ -36,17 +36,6 @@ public class Player extends CardHolder
         }
     }
 
-    public Card revertCard(boolean isMin) {
-        try {
-            Card card = isMin ? super.getCardList().getFirst(): super.getCardList().getLast();
-            card.setVisible(true);
-            return card;
-        } catch (NoSuchElementException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-    }
-
     public void sortCardList() {
         cardList.sort(Comparator.comparingInt(c -> c.getType().getNumber()));
     }

@@ -13,6 +13,12 @@ public class CardHolder {
     }
 
 
+    public Card revertCard(Card card) {
+        card.setVisible(true);
+        return card;
+    }
+
+
     public ArrayList<Card> getCardList() {
         return cardList;
     }
