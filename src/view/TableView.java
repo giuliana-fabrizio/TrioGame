@@ -1,25 +1,25 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import models.*;
+import controller.TableController;
 
 public class TableView extends JPanel {
 
-    private Game game;
-    private Table table;
-    private GameView gameView;
+    private TableController tableController;
+    private List<CardView> cardViews;
 
-    public TableView(Game game, Table table, GameView gameView) {
-        this.game = game;
-        this.table = table;
-        this.gameView = gameView;
-        init();
+    public TableView() {
+        cardViews = new ArrayList<>();
     }
 
-    private void init() {
-        int size = table.getCardList().size();
+    public void refresh() {
+        removeAll();
+
+        int size = cardViews.size();
         int columns = (int) Math.ceil(Math.sqrt(size));
         int rows = (int) Math.ceil((double) size / columns);
 
@@ -28,16 +28,24 @@ public class TableView extends JPanel {
 
         setPreferredSize(new Dimension(400, rows * (CardView.height + 5)));
 
-        for (Card card : table.getCardList()) {
-            CardView cardView = new CardView(card, game, gameView, true);
+        for (CardView cardView: cardViews) {
+            cardView.setImageIcon();
             add(cardView);
         }
-    }
 
-    public void refresh() {
-        removeAll();
-        init();
         revalidate();
         repaint();
+    }
+
+    public TableController getController() {
+        return tableController;
+    }
+
+    public void setTableController(TableController tableController) {
+        this.tableController = tableController;
+    }
+
+    public void setCardView(List<CardView> cardViews) {
+        this.cardViews = cardViews;
     }
 }

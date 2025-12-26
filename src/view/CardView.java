@@ -7,18 +7,14 @@ import models.*;
 
 public class CardView extends JButton {
 
-    private Card card;
     private CardController cardController;
     private ImageIcon imageIcon;
 
     public static final int height = 130; 
     public static final int width = 90;
 
-    public CardView(Card card, Game game, GameView gameView, boolean canRevert) {
+    public CardView(boolean canRevert) {
         super();
-
-        this.card = card;
-        cardController = new CardController(this.card, this, game, gameView);
 
         setPreferredSize(new Dimension(width, height));
         setFocusable(false);
@@ -28,19 +24,24 @@ public class CardView extends JButton {
         if (canRevert) {
             addActionListener(e -> cardController.revertCard());
         }
-
-        setImageIcon();
     }
 
     public ImageIcon getImageIcon() {
         return imageIcon;
     }
 
+    public void setController(CardController cardController) {
+        this.cardController = cardController;
+        setImageIcon();
+    }
+
     public void setImageIcon() {
         Image image;
 
-        if (card.isVisible()) {
-            image = new ImageIcon(getClass().getResource(card.getType().getImagePath())).getImage();
+        if (cardController.isCardVisible()) {
+            image = new ImageIcon(getClass().getResource(cardController.getCardImagePath())).getImage();
+        } else if (cardController.isCardVisiblePlayer()) {
+            image = new ImageIcon(getClass().getResource(cardController.getCardImagePath())).getImage(); // TODO image != ?
         } else {
             image = new ImageIcon(getClass().getResource("/assets/Dos.png")).getImage();
         }

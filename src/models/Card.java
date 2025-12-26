@@ -2,7 +2,7 @@ package models;
 
 public class Card {
 
-    private static int counter = 0;
+    public static int counter = 0;
 
     private final int id;
 

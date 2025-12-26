@@ -25,19 +25,8 @@ public class Player extends CardHolder
         }
     }
 
-    public void removeCard(boolean isMin) {
-        if (super.getCardList().isEmpty()) return;
-
-        try {
-            Card card = isMin ? super.getCardList().getFirst() : super.getCardList().getLast();
-            super.removeCard(card);
-        } catch (NoSuchElementException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
     public void sortCardList() {
-        cardList.sort(Comparator.comparingInt(c -> c.getType().getNumber()));
+        super.getCardList().sort(Comparator.comparingInt(c -> c.getType().getNumber()));
     }
 
     public int getId() {

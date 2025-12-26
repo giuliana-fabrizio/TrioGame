@@ -1,6 +1,8 @@
 package controller;
 
 import java.util.*;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import models.*;
 import view.*;
 
@@ -16,6 +18,7 @@ public class GameController {
 
     public void confirmPlayersArrangement() {
         game.getPlayers().sort(Comparator.comparingInt(p -> p.getPriority()));
+        gameView.getPlayerViews().sort(Comparator.comparingInt(pv -> pv.getController().getPlayerPriority()));
 
         int posPlayer = game.getCurrentPlayerPosition();
         gameView.refresh(posPlayer);
@@ -26,8 +29,18 @@ public class GameController {
             Player player = game.getPlayers().get(i);
             player.setPriority(list.get(i));
         }
+    }
 
-        gameView.sortPlayerViews();
+    public void restartGame() {
+        game.restartGame();
+        gameView.refresh(game.getCurrentPlayerPosition());
+    }
+
+    public void quitGame() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(gameView);
+        if (frame != null) {
+            frame.dispose();
+        }
     }
 
     public ArrayList<Player> getGamePlayers() {
@@ -36,5 +49,13 @@ public class GameController {
 
     public Table getGameTable() {
         return game.getTable();
+    }
+
+    public String getWinner() {
+        return game.verifyWinner();
+    }
+
+    public void setCardCounter() {
+        Card.counter = 0;
     }
 }

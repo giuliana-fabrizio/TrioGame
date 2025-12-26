@@ -3,31 +3,23 @@ package view;
 import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.*;
-import models.*;
+import controller.PlayerController;
 
 public class PlayerView extends JPanel {
 
-    private Game game;
-    private Player player;
-    private GameView gameView;
-
+    private PlayerController playerController;
+    private ArrayList<CardView> cardViews;
     private String direction;
+
     private JLabel nameLabel;
     private JPanel cardsPanel;
-    private boolean isCurrentPlayer = false;
 
     private static final Color ACTIVE_COLOR = Color.decode("#FFD700");
     private static final Color NORMAL_COLOR = Color.decode("#F3E3C1");
 
-    public PlayerView(Game game, GameView gameView, Player player, String direction) {
-        this.game = game;
-        this.gameView = gameView;
-        this.player = player;
+    public PlayerView(String direction) {
         this.direction = direction;
-        init();
-    }
 
-    private void init() {
         if ("top-bottom".equals(direction)) {
             setBorder(BorderFactory.createEmptyBorder(75, 0, 0, 0));
         }
@@ -35,28 +27,21 @@ public class PlayerView extends JPanel {
         setLayout(new BorderLayout(5, 5));
         setOpaque(false);
 
-        nameLabel = new JLabel(
-                player.getName() + " - " + String.valueOf(player.getScore()),
-                SwingConstants.CENTER
-        );
+        nameLabel = new JLabel("", SwingConstants.CENTER);
         nameLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        nameLabel.setForeground(NORMAL_COLOR);
         nameLabel.setOpaque(false);
-
         add(nameLabel, BorderLayout.NORTH);
 
         cardsPanel = new JPanel();
         cardsPanel.setLayout(new FlowLayout());
         cardsPanel.setOpaque(false);
-
-        displayCardList();
+        add(cardsPanel, BorderLayout.CENTER);
     }
 
     public void displayCardList() {
         cardsPanel.removeAll();
-        ArrayList<Card> cardList = player.getCardList();
 
-        int size = cardList.size();
+        int size = cardViews.size();
         int columns = (int) Math.ceil(Math.sqrt(size));
         int rows = (int) Math.ceil((double) size / columns);
 
@@ -64,33 +49,22 @@ public class PlayerView extends JPanel {
             cardsPanel.setPreferredSize(new Dimension(400, rows * (CardView.height + 5)));
         }
 
-
-        for (Card card : cardList) {
-            boolean canRevert = false;
-
-            if(card.equals(cardList.get(0)) || card.equals(cardList.get(size - 1))) {
-                canRevert = true;
-            }
-
-            CardView cardView = new CardView(card, game, gameView, canRevert);
+        for (CardView cardView : cardViews) {
+            cardView.setImageIcon();
             cardsPanel.add(cardView);
         }
-
-        add(cardsPanel, BorderLayout.CENTER);
 
         cardsPanel.revalidate();
         cardsPanel.repaint();
     }
 
-    public void setCurrentPlayer(boolean isActive) {
-        this.isCurrentPlayer = isActive;
-
+    public void setNameLabel(boolean isActive) {
         if (isActive) {
             nameLabel.setForeground(ACTIVE_COLOR);
-            nameLabel.setText(">> " + player.getName() + " - " + player.getScore() + " <<");
+            nameLabel.setText(">> " + playerController.displayPlayerInfos() + " <<");
         } else {
             nameLabel.setForeground(NORMAL_COLOR);
-            nameLabel.setText(player.getName() + " - " + player.getScore());
+            nameLabel.setText(playerController.displayPlayerInfos());
         }
 
         nameLabel.revalidate();
@@ -99,10 +73,19 @@ public class PlayerView extends JPanel {
 
     public void refresh(boolean isActive) {
         displayCardList();
-        setCurrentPlayer(isActive);
+        setNameLabel(isActive);
     }
 
-    public Player getPlayer() {
-        return player;
+    public PlayerController getController() {
+        return playerController;
+    }
+
+    public void setController(PlayerController playerController) {
+        this.playerController = playerController;
+    }
+
+
+    public void setCardView(ArrayList<CardView> cardViews) {
+        this.cardViews = cardViews;
     }
 }

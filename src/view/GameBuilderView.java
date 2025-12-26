@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import controller.GameBuilderController;
+import controller.AppController;
 
 public class GameBuilderView extends JPanel {
 
@@ -14,16 +14,15 @@ public class GameBuilderView extends JPanel {
     private final String NUMBER_BACKGROUND = "assets/Bouton_nombre.png";
     private final int SIZE_NUMBER = 60;
 
-    private GameBuilderController builderController;
+    private AppController appController;
     private JPanel gridPanel;
     private JButton button;
 
     private ArrayList<JTextField> playerFields;
     private ArrayList<String> playerNameList;
 
-
-    public GameBuilderView(GlobalView view) {
-        this.builderController = new GameBuilderController(this, view);
+    public GameBuilderView(AppController appController) {
+        this.appController = appController;
 
         playerFields = new ArrayList<>();
         playerNameList = new ArrayList<String>();
@@ -34,7 +33,6 @@ public class GameBuilderView extends JPanel {
 
         init();
     }
-
 
     public void init() {
         JLabel label = new JLabel("Configuration du jeu", SwingConstants.CENTER);
@@ -100,7 +98,6 @@ public class GameBuilderView extends JPanel {
         add(Box.createVerticalGlue()); 
     }
 
-
     public void askPlayerNames(int NUMBER_IMAGES) {
         gridPanel.removeAll();
         playerFields.clear();
@@ -114,7 +111,6 @@ public class GameBuilderView extends JPanel {
         gridPanel.revalidate();
         gridPanel.repaint();
     }
-
 
     public JButton drawNumberButton(int i, ImageIcon imageIcon) {
         JButton button = new JButton(String.valueOf(i));
@@ -132,11 +128,10 @@ public class GameBuilderView extends JPanel {
         button.setContentAreaFilled(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        button.addActionListener(e -> builderController.confirmPlayersNumber(i));
+        button.addActionListener(e -> askPlayerNames(i));
 
         return button;
     }
-
 
     public void drawPlayerInput(int i) {
         JPanel playerPanel = new JPanel();
@@ -169,6 +164,9 @@ public class GameBuilderView extends JPanel {
         playerFields.add(nameField);
     }
 
+    public void displayErrorDialog(String text) {
+        JOptionPane.showMessageDialog(this, text, "Erreur", JOptionPane.WARNING_MESSAGE);
+    }
 
     public void confirmConfiguration() {
         playerNameList.clear();
@@ -176,16 +174,15 @@ public class GameBuilderView extends JPanel {
         for (JTextField field : playerFields) {
             String text = field.getText().trim();
             if (text.isEmpty()) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Tous les champs doivent être remplis !",
-                    "Erreur",
-                    JOptionPane.WARNING_MESSAGE
-                );
+                displayErrorDialog("Tous les champs doivent être remplis !");
+                return;
+            } else if (playerNameList.contains(text)) {
+                displayErrorDialog(text + " déjà enregistré, veuillez choisir un autre nom.");
                 return;
             }
             playerNameList.add(text);
         }
-        builderController.confirmConfiguration(playerNameList);
+
+        appController.confirmConfiguration(playerNameList);
     }
 }

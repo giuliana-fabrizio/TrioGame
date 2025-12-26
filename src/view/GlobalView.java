@@ -3,8 +3,6 @@ package view;
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
-import controller.GameBuilderController;
-import models.*;
 
 public class GlobalView extends JFrame {
 
@@ -26,20 +24,20 @@ public class GlobalView extends JFrame {
     }
 
 
-    public void buildGame() {
+    public void buildGame(GameBuilderView builderView) {
         BackgroundPanel background = new BackgroundPanel(configurationImage, height, width);
         background.setLayout(new BorderLayout());
 
-        background.add(new GameBuilderView(this), BorderLayout.CENTER);
+        background.add(builderView, BorderLayout.CENTER);
         setContentPane(background);
     }
 
 
-    public void displayGame(Game game) {
+    public void displayGame(GameView gameView) {
         BackgroundPanel background = new BackgroundPanel(gameBoardImage, height, width);
         background.setLayout(new BorderLayout());
 
-        background.add(new GameView(game), BorderLayout.CENTER);
+        background.add(gameView, BorderLayout.CENTER);
 
         setContentPane(background);
 

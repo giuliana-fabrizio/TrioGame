@@ -1,9 +1,8 @@
-import view.GlobalView;
+import controller.AppController;
 
 public class Main {
     public static void main(String[] args) {
-        GlobalView view = new GlobalView("Jeu du Trio");
-        view.buildGame();
-        view.display();
+        AppController appController = new AppController();
+        appController.start();
     }
 }
