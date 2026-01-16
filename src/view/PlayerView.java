@@ -20,7 +20,8 @@ public class PlayerView extends JPanel {
     public PlayerView(String direction) {
         this.direction = direction;
 
-        if ("top-bottom".equals(direction)) {
+        if ("top".equals(direction)) {
+            System.out.println("TATATAT\n");
             setBorder(BorderFactory.createEmptyBorder(75, 0, 0, 0));
         }
 

@@ -8,7 +8,7 @@ public class CardHolder {
     protected ArrayList<Card> cardList;
 
 
-    public CardHolder(){
+    public CardHolder() {
         cardList = new ArrayList<>();
     }
 
@@ -20,6 +20,11 @@ public class CardHolder {
 
 
     public ArrayList<Card> getCardList() {
+        return new ArrayList<>(cardList);
+    }
+
+
+    public ArrayList<Card> getModifiableCardList() {
         return cardList;
     }
 

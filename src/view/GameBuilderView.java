@@ -29,7 +29,7 @@ public class GameBuilderView extends JPanel {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setOpaque(false);
-        setBorder(BorderFactory.createEmptyBorder(300, 150, 80, 150));
+        setBorder(BorderFactory.createEmptyBorder(225, 150, 80, 150));
 
         init();
     }
@@ -177,7 +177,7 @@ public class GameBuilderView extends JPanel {
                 displayErrorDialog("Tous les champs doivent être remplis !");
                 return;
             } else if (playerNameList.contains(text)) {
-                displayErrorDialog(text + " déjà enregistré, veuillez choisir un autre nom.");
+                displayErrorDialog(text + " déjà utilisé, veuillez choisir un autre nom.");
                 return;
             }
             playerNameList.add(text);

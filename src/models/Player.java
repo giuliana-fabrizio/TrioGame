@@ -26,7 +26,7 @@ public class Player extends CardHolder
     }
 
     public void sortCardList() {
-        super.getCardList().sort(Comparator.comparingInt(c -> c.getType().getNumber()));
+        super.getModifiableCardList().sort(Comparator.comparingInt(c -> c.getType().getNumber()));
     }
 
     public int getId() {
@@ -47,6 +47,10 @@ public class Player extends CardHolder
 
     public void incrementScore() {
         this.score++;
+    }
+
+    public void resetScore() {
+        this.score = 0;
     }
 
     public void setPriority(int priority) {

@@ -18,12 +18,10 @@ public class AppController {
         Game game = new Game();
         game.initParty(playerNameList);
 
-
         // Create GameView
         GameView gameView = new GameView();
         GameController gameController = new GameController(game, gameView);
         gameView.setController(gameController);
-
 
         // Create TableView
         TableView tableView = new TableView();
@@ -34,11 +32,10 @@ public class AppController {
         gameView.setTableView(tableView);
         gameView.displayTableView();
 
-
         // Create PlayerView
         int currentPlayer = game.getCurrentPlayerPosition();
         ArrayList<PlayerView> playerViews = new ArrayList<>();
-        List<String> directions = List.of("top-bottom", "top-bottom", "onside", "onside", "top-bottom", "top-bottom");
+        List<String> directions = List.of("top", "bottom", "onside", "onside", "bottom", "top");
 
         for (int i = 0; i < game.getPlayers().size(); i++) {
             Player player = game.getPlayers().get(i);
@@ -53,10 +50,10 @@ public class AppController {
         gameView.setPlayerViews(playerViews);
         gameView.placePlayers();
 
-
         // Display view
         view.displayGame(gameView);
     }
+
 
     public void start() {
         GameBuilderView builderView = new GameBuilderView(this);

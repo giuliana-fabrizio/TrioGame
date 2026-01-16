@@ -65,4 +65,8 @@ public class Card {
     public void setVisiblePlayer(boolean visiblePlayer) {
         this.visiblePlayer = visiblePlayer;
     }
+
+    public static void resetCounter() {
+        counter = 0;
+    }
 }

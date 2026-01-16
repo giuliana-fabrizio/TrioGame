@@ -6,15 +6,10 @@ import java.awt.*;
 public class BackgroundPanel extends JPanel {
 
     private Image backgroundImage;
-    private int height;
-    private int width;
 
-    public BackgroundPanel(String imagePath, int height, int width) {
+    public BackgroundPanel(String imagePath) {
         backgroundImage = new ImageIcon(imagePath).getImage();
         setLayout(new BorderLayout(5, 5));
-
-        this.height = height;
-        this.width = width;
     }
 
     @Override

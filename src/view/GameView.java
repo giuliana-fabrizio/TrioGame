@@ -40,7 +40,7 @@ public class GameView extends JPanel {
 
     private List<JPanel> createPlayersPanel() {
         JPanel northPanel = new JPanel(new GridLayout(1, 2));
-        northPanel.setPreferredSize(new Dimension(0, CardView.height * 2));
+        northPanel.setPreferredSize(new Dimension(0, CardView.height * 2 + 10));
         northPanel.setOpaque(false);
         add(northPanel, BorderLayout.NORTH);
 

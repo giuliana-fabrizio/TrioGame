@@ -20,6 +20,16 @@ public class TableView extends JPanel {
         removeAll();
 
         int size = cardViews.size();
+
+        if (size == 0) {
+            setLayout(new GridLayout(1, 1));
+            setOpaque(false);
+            setPreferredSize(new Dimension(400, CardView.height + 5));
+            revalidate();
+            repaint();
+            return;
+        }
+
         int columns = (int) Math.ceil(Math.sqrt(size));
         int rows = (int) Math.ceil((double) size / columns);
 
@@ -28,7 +38,7 @@ public class TableView extends JPanel {
 
         setPreferredSize(new Dimension(400, rows * (CardView.height + 5)));
 
-        for (CardView cardView: cardViews) {
+        for (CardView cardView : cardViews) {
             cardView.setImageIcon();
             add(cardView);
         }

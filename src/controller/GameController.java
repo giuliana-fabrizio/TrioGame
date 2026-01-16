@@ -56,6 +56,6 @@ public class GameController {
     }
 
     public void setCardCounter() {
-        Card.counter = 0;
+        Card.resetCounter();
     }
 }

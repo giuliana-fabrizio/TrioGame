@@ -11,6 +11,8 @@ public class CardController {
     private CardView cardView;
     private Game game;
     private GameView gameView;
+    private Timer timer;
+
 
     public CardController(Card card, CardView cardView, Game game, GameView gameView) {
         this.card = card;
@@ -18,6 +20,7 @@ public class CardController {
         this.game = game;
         this.gameView = gameView;
     }
+
 
     public void revertCard() {
         if (!game.isSelectionCardLocked()) return;
@@ -30,10 +33,16 @@ public class CardController {
         if (result && game.getCardReturn().size() > 1) {
             game.lockCardSelection();
 
-            Timer timer = new Timer(2000, e -> {
+            if (timer != null && timer.isRunning()) {
+                timer.stop();
+            }
+
+            timer = new Timer(500, e -> {
                 int posPlayer = game.getCurrentPlayerPosition();
 
-                if (!game.verifyReturnedCards() || game.getCardReturn().size() == 3) {
+                TurnResult turnResult = game.verifyReturnedCards();
+
+                if (turnResult == TurnResult.MISMATCH || turnResult == TurnResult.SCORE_GAINED) {
                     game.hideCardReturn();
 
                     if (game.isTrioRemained()) {
@@ -59,26 +68,25 @@ public class CardController {
         }
     }
 
+
     private void updatePlayersCardsVisibility(int posPlayer) {
         for (int i = 0; i < game.getPlayers().size(); i++) {
             game.getPlayers().get(i).displayCardList(i == posPlayer);
         }
     }
 
+
     public boolean isCardVisible() {
         return card.isVisible();
     }
+
 
     public boolean isCardVisiblePlayer() {
         return card.isVisiblePlayer();
     }
 
+
     public String getCardImagePath() {
         return card.getType().getImagePath();
     }
-
-    // TODO
-    // public String getCardImagePathGray() {
-    //     return card.getType().getImagePathGray();
-    // }
 }

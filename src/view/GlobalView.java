@@ -6,8 +6,6 @@ import javax.swing.*;
 
 public class GlobalView extends JFrame {
 
-    private final int height = 1080;
-    private final int width = 1920;
     private final String configurationImage = "assets/Configuration.png";
     private final String gameBoardImage = "assets/Plateau.png";
 
@@ -19,13 +17,12 @@ public class GlobalView extends JFrame {
         setLocationRelativeTo(null);
 
         setResizable(true);
-        setSize(width, height);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
 
     public void buildGame(GameBuilderView builderView) {
-        BackgroundPanel background = new BackgroundPanel(configurationImage, height, width);
+        BackgroundPanel background = new BackgroundPanel(configurationImage);
         background.setLayout(new BorderLayout());
 
         background.add(builderView, BorderLayout.CENTER);
@@ -34,7 +31,7 @@ public class GlobalView extends JFrame {
 
 
     public void displayGame(GameView gameView) {
-        BackgroundPanel background = new BackgroundPanel(gameBoardImage, height, width);
+        BackgroundPanel background = new BackgroundPanel(gameBoardImage);
         background.setLayout(new BorderLayout());
 
         background.add(gameView, BorderLayout.CENTER);

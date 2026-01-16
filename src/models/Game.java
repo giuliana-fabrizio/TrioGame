@@ -3,6 +3,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.Collections;
 
+
+
 public class Game {
 
     private static final int NUMBER_CARDS = 36;
@@ -62,14 +64,14 @@ public class Game {
         int index = 0;
 
         for (Player player : players) {
-            player.getCardList().clear();
+            player.getModifiableCardList().clear();
             for (int i = 0; i < nbCardsPlayer; i++) {
                 player.addCard(cards[index++]);
             }
             player.sortCardList();
         }
 
-        table.getCardList().clear();
+        table.getModifiableCardList().clear();
         for (int i = 0; i < nbCardsTable; i++) {
             table.addCard(cards[index++]);
         }
@@ -91,12 +93,12 @@ public class Game {
         cardReturned.clear();
     }
 
-    public boolean verifyReturnedCards() {
-        for(int i = 0; i < cardReturned.size() - 1; i++) {
+    public TurnResult verifyReturnedCards() {
+        for (int i = 0; i < cardReturned.size() - 1; i++) {
             Card card1 = cardReturned.get(i);
-            Card card2 = cardReturned.get(i+1);
+            Card card2 = cardReturned.get(i + 1);
             if (card1.getType() != card2.getType() || card1.getId() == card2.getId()) {
-                return false;
+                return TurnResult.MISMATCH;
             }
         }
 
@@ -116,8 +118,10 @@ public class Game {
             } else if (currentPlayer.getScore() >= 3) {
                 winner = currentPlayer;
             }
+
+            return TurnResult.SCORE_GAINED;
         }
-        return true;
+        return TurnResult.MATCH;
     }
 
     public boolean isTrioRemained() {
@@ -177,9 +181,14 @@ public class Game {
     }
 
     public void restartGame() {
+        Card.resetCounter();
         cardReturned.clear();
         currentPlayerPosition = 0;
         winner = null;
+
+        for (Player player : players) {
+            player.resetScore();
+        }
 
         createCardPacks();
         distributeCards();
