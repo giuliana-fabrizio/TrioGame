@@ -21,7 +21,6 @@ public class PlayerView extends JPanel {
         this.direction = direction;
 
         if ("top".equals(direction)) {
-            System.out.println("TATATAT\n");
             setBorder(BorderFactory.createEmptyBorder(75, 0, 0, 0));
         }
 
